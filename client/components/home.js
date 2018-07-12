@@ -6,58 +6,7 @@ import axios from 'axios';
 class HomeScreen extends Component {
   state = { 
     loading: false,
-    data: [
-      {
-        "id": 5,
-        "name": "Black Tap",
-        "address": "136 W 55th St\r\nNew York, NY 10019\r\nb/t 7th Ave & Avenue Of The Americas \r\nMidtown West",
-        "photo": "food/photos/o_PrVya5b_oncYZjh.jpg",
-        "menu": "Burger, Salad, Cesar Salad",
-        "tags": "Burgers, warm, nice",
-        "pub_date": "2018-07-11T23:03:37.790528Z",
-        "writer": null
-      },
-      {
-        "id": 4,
-        "name": "Burger & Lobster",
-        "address": "1718 menahan st",
-        "photo": "food/photos/o_PrVya5b.jpg",
-        "menu": "Newone",
-        "tags": "Nothing",
-        "pub_date": "2018-07-11T16:30:03.301600Z",
-        "writer": null
-      },
-      {
-        "id": 3,
-        "name": "Burger & Lobster",
-        "address": "1718 menahan st",
-        "photo": "food/photos/o.jpg",
-        "menu": "Brugers, fries and a lot more",
-        "tags": "burgers, warm, cozy",
-        "pub_date": "2018-07-11T16:29:12.522117Z",
-        "writer": null
-      },
-      {
-        "id": 2,
-        "name": "Burger & Lobster",
-        "address": "39 W 19th St\r\nNew York, NY 10011",
-        "photo": null,
-        "menu": "https://s3-media2.fl.yelpcdn.com/bphoto/ysH4wU0R13y3N3jG7GYFrw/o.jpg",
-        "tags": "burgers, warm, cozy",
-        "pub_date": "2018-07-11T15:28:07.847879Z",
-        "writer": null
-      },
-      {
-        "id": 1,
-        "name": "Maximo De La Rosa",
-        "address": "123 road",
-        "photo": null,
-        "menu": "Boring menu",
-        "tags": "notags",
-        "pub_date": "2018-07-11T13:15:48.301258Z",
-        "writer": null
-      }
-    ],
+    data: [],
     error: null,
     refreshing: false,
     base_url: "http://127.0.0.1:8000"
@@ -68,23 +17,19 @@ class HomeScreen extends Component {
   }
 
   fetchDataFromApi = () => {
-    const url = "http://localhost:8000/api/list"
     this.setState({ loading: true })
-
-    // axios.get("http://localhost:8000/api/list")
-      // .then(() => console.log('sucessss'))
-      // .then(() => {
+    axios.get("http://localhost:8000/api/list")
+      .then(res => {
         this.setState({
-          // data: res,
+          data: res.data,
           error: null,
           loading: false,
           refreshing: false
         });
-      // })
-      // .catch(error => {
-      //   console.log({error})
-      //   this.setState({ error, loading : false });
-      // });
+      })
+      .catch(error => {
+        this.setState({ error, loading : false });
+      });
   }
 
   handleRefresh = () => {
@@ -138,7 +83,7 @@ class HomeScreen extends Component {
                 />}
               title={`${item.name}`}
               titleStyle={{ fontSize: 16}}
-              titleContainerStyle = {{ marginLeft: 120 }}
+              titleContainerStyle = {{ marginLeft: 50 }}
               subtitle={<View style={styles.subtitleView}>
             <Text style={styles.menuText}>{item.menu}</Text>
             <Text style={styles.locText}>{item.address}</Text>
@@ -171,7 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingLeft: 10,
     paddingTop: 5,
-    marginLeft: 110
+    marginLeft: 40
   },
   menuText: {
     paddingLeft: 10,

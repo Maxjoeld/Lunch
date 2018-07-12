@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, FlatList, ActivityIndicator, View, Image } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, SearchBar, Avatar } from "react-native-elements";
-import { MapView } from 'expo';
 
 
 export default class DetailScreen extends React.Component {
@@ -22,15 +21,6 @@ export default class DetailScreen extends React.Component {
         <Text style={styles.dMenuText}>{params.menu}</Text>
           <Text style={styles.dMenuText}>{params.address}</Text>
       </View>
-    //   <MapView
-    //    style={{ flex: 1 }}
-    //    initialRegion={{
-    //      latitude: 37.78825,
-    //      longitude: -122.4324,
-    //      latitudeDelta: 0.0922,
-    //      longitudeDelta: 0.0421,
-    //    }}
-    //  />
     );
   }
 
