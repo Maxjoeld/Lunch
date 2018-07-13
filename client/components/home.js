@@ -9,7 +9,7 @@ class HomeScreen extends Component {
     data: [],
     error: null,
     refreshing: false,
-    base_url: "http://127.0.0.1:8000"
+    base_url: "http://localhost:8000"
    }
 
   componentDidMount() {
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingLeft: 10,
     paddingTop: 5,
-    marginLeft: 40
+    marginLeft: 50
   },
   menuText: {
     paddingLeft: 10,
