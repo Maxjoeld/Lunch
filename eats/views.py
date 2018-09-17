@@ -2,8 +2,13 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Restaurant
 from .serializers import RestaurantSerializer
+from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
+
+# def signup_view(request):
+#   form = UserCreationForm()
+#   return render(request, 'accounts/signup.html', {'form': form })
 
 def index(request):
   rest_list = Restaurant.objects.order_by('-pub_date')
@@ -24,3 +29,4 @@ class FoodList(generics.ListCreateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     # permission_classes = (IsAdminUser,)
+
