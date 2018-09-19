@@ -1,46 +1,60 @@
-import React from 'react';
-import { StyleSheet, Text, FlatList, ActivityIndicator, View, Image} from 'react-native';
-import { List, ListItem, SearchBar, Avatar } from 'react-native-elements';
-import { createStackNavigator } from 'react-navigation';
-import { constants } from 'expo';
-import HomeScreen from './components/home';
-import DetailScreen from './components/detail';
-import SigninScreen from './components/LoginForm';
-import SignupScreen from './components/SignupForm';
+import React from "react";
+import { createRootNavigator } from "./router";
+import { isSignedIn } from "./auth";
 
+export default class App extends React.Component {
+  state = {
+      signedIn: false,
+      checkedSignIn: false
+    };
 
-export default createStackNavigator({
-  Home: { screen: HomeScreen,
-          navigationOptions: {
-              title: 'Home',
-              // headerBackTitle: 'Back',
-          },
-        },
-  Detail: { screen: DetailScreen,
-          navigationOptions: {
-            title: 'Detail',
-        },
-      },
-  Signin: { screen: SigninScreen,
-          navigationOptions: {
-            title: 'Log in',
-        },
-      },
-  Signup: { screen: SignupScreen,
-          navigationOptions: {
-            title: 'Sign Up',
-        },
-      }
-});
-
-    // export default class App extends React.Component {
-    //   render() {
-    //     return (
-    //       <View style={styles.container}>
-    //         <Text>Wow this actually works</Text>
-    //         <Text>Changes you make will automatically reload.</Text>
-    //         <Text>Shake your phone to open the developer menu.</Text>
-    //       </View>
-    //     );
-    //   }
+  componentDidMount() {
+    // if (this.state.logged_in) {
+    //   fetch('http://localhost:8000/core/current_user/', {
+    //     headers: {
+    //       Authorization: `JWT ${localStorage.getItem('token')}`
+    //     }
+    //   })
+    //     .then(res => res.json())
+    //     .then(json => {
+    //       this.setState({ username: json.username });
+    //     });
     // }
+    // isSignedIn()
+    //   .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
+    //   .catch(err => alert("An error occurred"));
+  }
+
+  handle_login = (e, data) => {
+    e.preventDefault();
+    fetch('http://localhost:8000/token-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json.token);
+        AsyncStorage.setItem('token', json.token);
+        this.setState({
+          logged_in: true,
+          displayed_form: '',
+          username: json.user.username
+        });
+      });
+  };
+
+  render() {
+    const { checkedSignIn, signedIn } = this.state;
+
+    // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
+    // if (!checkedSignIn) {
+    //   return null;
+    // }
+
+    const Layout = createRootNavigator(signedIn);
+    return <Layout />;
+  }
+}

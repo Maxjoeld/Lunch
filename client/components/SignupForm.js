@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, AsyncStorage } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 class SignupForm extends React.Component {
@@ -21,7 +21,7 @@ class SignupForm extends React.Component {
       .then(res => res.json())
       .then(json => {
         console.log(json);
-        localStorage.setItem('token', json.token);
+        AsyncStorage.setItem('token', json.token);
         this.setState({
           logged_in: true,
           displayed_form: '',

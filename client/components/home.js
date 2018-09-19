@@ -93,9 +93,9 @@ class HomeScreen extends Component {
             />
           )}
         />
-        <Text onPress={() => this.props.navigation.navigate('Signin')}>
+        {/* <Text onPress={() => this.props.navigation.navigate('Signin')}>
           Auth
-        </Text>
+        </Text> */}
       </List>
     );
   }
