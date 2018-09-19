@@ -9,6 +9,27 @@ class LoginForm extends React.Component {
     password: ''
   };
 
+  handle_login = (e, data) => {
+    e.preventDefault();
+    fetch('http://localhost:8000/token-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json.token);
+        localStorage.setItem('token', json.token);
+        // this.setState({
+        //   logged_in: true,
+        //   displayed_form: '',
+        //   username: json.user.username
+        // });
+      });
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -28,7 +49,7 @@ class LoginForm extends React.Component {
           onChangeText={(password) => this.setState({password})}
         />
         <View style={{ display: 'flex', width: '100%', alignItems: 'center',justifyContent: 'center'}}>
-          <Text style={styles.button} onPress={e => this.props.handle_login(e, this.state)}>Submit</Text>
+          <Text style={styles.button} onPress={e => this.handle_login(e, this.state)}>Submit</Text>
           <Text style={styles.account}>
             Don't have an Account ? 
             <Text onPress={() => this.props.navigation.navigate('Signup')}>Sign Up</Text>

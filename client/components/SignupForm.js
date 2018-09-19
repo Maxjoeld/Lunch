@@ -9,6 +9,27 @@ class SignupForm extends React.Component {
     password: ''
   };
 
+  handle_signup = (e, data) => {
+    e.preventDefault();
+    fetch('http://localhost:8000/api/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        localStorage.setItem('token', json.token);
+        this.setState({
+          logged_in: true,
+          displayed_form: '',
+          username: json.username
+        });
+      });
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -28,7 +49,7 @@ class SignupForm extends React.Component {
           onChangeText={(password) => this.setState({password})}
         />
         <View style={{ display: 'flex', width: '100%', alignItems: 'center',justifyContent: 'center'}}>
-          <Text style={styles.button} onPress={e => this.props.handle_signup(e, this.state)}>Submit</Text>
+          <Text style={styles.button} onPress={e => this.handle_signup(e, this.state)}>Submit</Text>
           <Text style={styles.account}>
             Already a member ?
             <Text onPress={() => this.props.navigation.navigate('Signin')}> Log in</Text>

@@ -19,6 +19,6 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('eats.urls')),
+    path('api/', include('eats.urls')),
     path('token-auth/', obtain_jwt_token)
 ]

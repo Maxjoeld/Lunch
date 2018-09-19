@@ -13,7 +13,7 @@ export default createStackNavigator({
   Home: { screen: HomeScreen,
           navigationOptions: {
               title: 'Home',
-              headerBackTitle: 'Back',
+              // headerBackTitle: 'Back',
           },
         },
   Detail: { screen: DetailScreen,
