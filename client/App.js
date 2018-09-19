@@ -6,6 +6,7 @@ import { constants } from 'expo';
 import HomeScreen from './components/home';
 import DetailScreen from './components/detail';
 import SigninScreen from './components/LoginForm';
+import SignupScreen from './components/SignupForm';
 
 
 export default createStackNavigator({
@@ -22,7 +23,12 @@ export default createStackNavigator({
       },
   Signin: { screen: SigninScreen,
           navigationOptions: {
-            title: 'Signin',
+            title: 'Log in',
+        },
+      },
+  Signup: { screen: SignupScreen,
+          navigationOptions: {
+            title: 'Sign Up',
         },
       }
 });

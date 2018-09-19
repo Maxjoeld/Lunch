@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
           <Text style={styles.button} onPress={e => this.props.handle_login(e, this.state)}>Submit</Text>
           <Text style={styles.account}>
             Don't have an Account ? 
-            <Text onPress={() => this.props.navigation.navigate('SignUp')}>Sign Up</Text>
+            <Text onPress={() => this.props.navigation.navigate('Signup')}>Sign Up</Text>
           </Text>
         </View>
       </View>
