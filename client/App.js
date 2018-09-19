@@ -5,6 +5,8 @@ import { createStackNavigator } from 'react-navigation';
 import { constants } from 'expo';
 import HomeScreen from './components/home';
 import DetailScreen from './components/detail';
+import SigninScreen from './components/LoginForm';
+
 
 export default createStackNavigator({
   Home: { screen: HomeScreen,
@@ -16,6 +18,11 @@ export default createStackNavigator({
   Detail: { screen: DetailScreen,
           navigationOptions: {
             title: 'Detail',
+        },
+      },
+  Signin: { screen: SigninScreen,
+          navigationOptions: {
+            title: 'Signin',
         },
       }
 });

@@ -27,7 +27,7 @@ class UserSerializerWithToken(serializers.ModelSerializer):
         payload = jwt_payload_handler(obj)
         token = jwt_encode_handler(payload)
         return token
-
+# look into the overriding of the serializers create method 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
         instance = self.Meta.model(**validated_data)

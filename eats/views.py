@@ -14,10 +14,6 @@ from rest_framework.views import APIView
 from .serializers import UserSerializer, UserSerializerWithToken
 
 
-# def signup_view(request):
-#   form = UserCreationForm()
-#   return render(request, 'accounts/signup.html', {'form': form })
-
 def index(request):
   rest_list = Restaurant.objects.order_by('-pub_date')
   context = {'rest_list': rest_list}
@@ -38,6 +34,8 @@ class FoodList(generics.ListCreateAPIView):
     serializer_class = RestaurantSerializer
     # permission_classes = (IsAdminUser,)
 
+# view will be used anytime the user revisits the site, 
+# reloads the page, or does anything else that causes React to forget its state
 @api_view(['GET'])
 def current_user(request):
     """
@@ -53,7 +51,8 @@ class UserList(APIView):
     Create a new user. It's called 'UserList' because normally we'd have a get
     method here too, for retrieving a list of all User objects.
     """
-
+    # Must be .AllowAny because otherwise the user would have to be logged in 
+    #before they sign up 
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):

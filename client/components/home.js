@@ -20,6 +20,7 @@ class HomeScreen extends Component {
     this.setState({ loading: true })
     axios.get("http://localhost:8000/api/list")
       .then(res => {
+        console.log(res.data)
         this.setState({
           data: res.data,
           error: null,
@@ -91,19 +92,22 @@ class HomeScreen extends Component {
               containerStyle={{ borderBottomWidth: 0, marginBottom: 20 }}
             />
           )}
-          keyExtractor={item => item.id}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
-          onRefresh={this.handleRefresh}
-          refreshing={this.state.refreshing}
-
         />
+        <Text onPress={() => this.props.navigation.navigate('Signin')}>
+          Auth
+        </Text>
       </List>
     );
   }
 }
  
 export default HomeScreen;
+
+          // keyExtractor={item => item.id}
+          // ItemSeparatorComponent={this.renderSeparator}
+          // ListHeaderComponent={this.renderHeader}
+          // onRefresh={this.handleRefresh}
+          // refreshing={this.state.refreshing}
 
 const styles = StyleSheet.create({
   container: {

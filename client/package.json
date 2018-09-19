@@ -23,11 +23,13 @@
     "axios": "^0.18.0",
     "expo": "^27.0.1",
     "flow-bin": "^0.76.0",
+    "prop-types": "^15.6.2",
     "react": "16.3.1",
     "react-devtools": "^3.2.3",
     "react-native": "~0.55.2",
     "react-native-elements": "^0.19.1",
     "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^2.6.2"
+    "react-navigation": "^2.6.2",
+    "tcomb-form-native": "^0.6.16"
   }
 }
