@@ -15,11 +15,10 @@ class Profile extends React.Component {
   
   render() {
     Alert.alert(
-      'Alert Title',
-      'My Alert Msg',
+      'Leaving Lunch',
+      'Are you sure you want to log out',
       [
-        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Cancel', onPress: () => this.props.navigation.navigate('Home')},
         {text: 'OK', onPress: () => this.logout()},
       ],
       { cancelable: false }

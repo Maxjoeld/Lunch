@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, FlatList, ActivityIndicator, View, Image } from 'react-native';
 import { List, ListItem, SearchBar, Avatar } from "react-native-elements";
+import token from './token';
 import axios from 'axios';
 import { isSignedIn } from "./auth";
 
@@ -25,10 +26,16 @@ class HomeScreen extends Component {
   }
 
   fetchDataFromApi = () => {
+
+
     this.setState({ loading: true })
-    axios.get("http://localhost:8000/api/list")
+    console.log({ thisistoken: token.token});
+    axios.get('https://api.yelp.com/v3/businesses/search?term=delis&location=11385',{
+      headers: {
+        'Authorization': `bearer ${token.token}`
+      }})
       .then(res => {
-        console.log(res.data)
+        console.log({thisistheresponse: res.data})
         this.setState({
           data: res.data,
           error: null,
@@ -37,6 +44,7 @@ class HomeScreen extends Component {
         });
       })
       .catch(error => {
+        console.log({thisistheerror: error})
         this.setState({ error, loading : false });
       });
   }

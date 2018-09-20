@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesome } from "react-native-vector-icons";
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator  } from 'react-navigation';
 
-import HomeScreen from './components/home';
+import HomeScreen from './components/yelphome';
 import ProfileScreen from './components/Profile';
 import DetailScreen from './components/detail';
 import SigninScreen from './components/LoginForm';
@@ -13,6 +13,7 @@ export const SignedIn = createStackNavigator({
   Home: { screen: HomeScreen,
           navigationOptions: {
               title: 'Home',
+              headerStyle: { marginBottom: -20 },
               headerBackTitle: 'Back',
           },
         },

@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserSerializerWithToken
-
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
   rest_list = Restaurant.objects.order_by('-pub_date')
@@ -20,6 +20,7 @@ def index(request):
   return render(request, 'food/index.html', context)
 
 #rest api end point
+@csrf_exempt
 def get_rest_list(request):
   """
   Returns Json list of all restaurants
