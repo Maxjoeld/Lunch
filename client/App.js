@@ -1,6 +1,7 @@
 import React from "react";
 import { createRootNavigator } from "./router";
-import { isSignedIn } from "./auth";
+import { AsyncStorage } from 'react-native';
+import { isSignedIn } from "./components/auth";
 
 export default class App extends React.Component {
   state = {
@@ -9,52 +10,63 @@ export default class App extends React.Component {
     };
 
   componentDidMount() {
-    // if (this.state.logged_in) {
-    //   fetch('http://localhost:8000/core/current_user/', {
-    //     headers: {
-    //       Authorization: `JWT ${localStorage.getItem('token')}`
-    //     }
-    //   })
-    //     .then(res => res.json())
-    //     .then(json => {
-    //       this.setState({ username: json.username });
-    //     });
-    // }
-    // isSignedIn()
-    //   .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
-    //   .catch(err => alert("An error occurred"));
-  }
+    console.log({hey:
+      AsyncStorage.getItem('token').then((value) => {
+        console.log({value});
+       })
 
-  handle_login = (e, data) => {
-    e.preventDefault();
-    fetch('http://localhost:8000/token-auth/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+    }
+    )
+    
+    isSignedIn()
+    .then(res => {
+      console.log({res})
+      if (res) {
+        console.log('we made it')
+        fetch('http://localhost:8000/api/current_user/', {
+          headers: {
+            Authorization: `JWT ${AsyncStorage.getItem('token')}`
+          }
+        })
+        .then(res => res.json())
+        .then(json => {
+          console.log('okay')
+          this.setState({ 
+            username: json.username, 
+            signedIn: true, 
+            checkedSignIn: true  });
+        })
+      } else {
+        this.setState({ 
+          signedIn: false, 
+          })
+      }
     })
-      .then(res => res.json())
-      .then(json => {
-        console.log(json.token);
-        AsyncStorage.setItem('token', json.token);
-        this.setState({
-          logged_in: true,
-          displayed_form: '',
-          username: json.user.username
-        });
-      });
-  };
+    .catch(err => console.log('error'));
+
+    // if (AsyncStorage.getItem('token')) {
+    // }
+    // else {
+    //   this.setState({ 
+    //     username: '', 
+    //     signedIn: false, 
+    //     checkedSignIn: false  });
+    // }
+  }
 
   render() {
     const { checkedSignIn, signedIn } = this.state;
-
+    console.log('woooooooooooooo')
+    console.log({ state: this.state.signedIn});
+    // console.log(AsyncStorage.getItem('token'));
     // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
     // if (!checkedSignIn) {
     //   return null;
     // }
 
     const Layout = createRootNavigator(signedIn);
-    return <Layout />;
+    return (
+        <Layout />
+    )
   }
 }

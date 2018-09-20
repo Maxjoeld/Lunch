@@ -9,7 +9,7 @@ class SignupForm extends React.Component {
     password: ''
   };
 
-  handle_signup = (e, data) => {
+  signup = (e, data) => {
     e.preventDefault();
     fetch('http://localhost:8000/api/users/', {
       method: 'POST',
@@ -49,7 +49,7 @@ class SignupForm extends React.Component {
           onChangeText={(password) => this.setState({password})}
         />
         <View style={{ display: 'flex', width: '100%', alignItems: 'center',justifyContent: 'center'}}>
-          <Text style={styles.button} onPress={e => this.handle_signup(e, this.state)}>Submit</Text>
+          <Text style={styles.button} onPress={e => this.signup(e, this.state)}>Submit</Text>
           <Text style={styles.account}>
             Already a member ?
             <Text onPress={() => this.props.navigation.navigate('Signin')}> Log in</Text>
@@ -61,10 +61,6 @@ class SignupForm extends React.Component {
 }
 
 export default SignupForm;
-
-SignupForm.propTypes = {
-  handle_signup: PropTypes.func.isRequired
-};
 
 const styles = StyleSheet.create({
   container: {

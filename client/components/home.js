@@ -92,6 +92,7 @@ class HomeScreen extends Component {
               containerStyle={{ borderBottomWidth: 0, marginBottom: 20 }}
             />
           )}
+          keyExtractor={(item, index) => index.toString()}
         />
         {/* <Text onPress={() => this.props.navigation.navigate('Signin')}>
           Auth

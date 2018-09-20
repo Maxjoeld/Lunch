@@ -1,12 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 class LoginForm extends React.Component {
   state = {
     username: '',
     password: ''
+  };
+
+  login = (e, data) => {
+    e.preventDefault();
+    fetch('http://localhost:8000/token-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(json => {
+      console.log(json.token);
+      AsyncStorage.setItem('token', json.token);
+      this.props.navigation.navigate('tabNav');
+
+    })
+    .catch((err) => console.log('error'))
   };
 
   render() {
@@ -28,7 +47,7 @@ class LoginForm extends React.Component {
           onChangeText={(password) => this.setState({password})}
         />
         <View style={{ display: 'flex', width: '100%', alignItems: 'center',justifyContent: 'center'}}>
-          <Text style={styles.button} onPress={e => this.props.login(e, this.state)}>Submit</Text>
+          <Text style={styles.button} onPress={e => this.login(e, this.state)}>Submit</Text>
           <Text style={styles.account}>
             Don't have an Account ? 
             <Text onPress={() => this.props.navigation.navigate('Signup')}>Sign Up</Text>
@@ -40,10 +59,6 @@ class LoginForm extends React.Component {
 }
 
 export default LoginForm;
-
-LoginForm.propTypes = {
-  handle_login: PropTypes.func.isRequired
-};
 
 const styles = StyleSheet.create({
   container: {
