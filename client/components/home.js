@@ -10,7 +10,7 @@ class HomeScreen extends Component {
     data: [],
     error: null,
     refreshing: false,
-    base_url: "http://localhost:8000"
+    base_url: "http://localhost:8000/api"
    }
 
   componentDidMount() {
