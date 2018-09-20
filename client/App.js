@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import { createRootNavigator } from "./router";
 import { AsyncStorage } from 'react-native';
 import { isSignedIn } from "./components/auth";
@@ -9,51 +10,19 @@ export default class App extends React.Component {
       checkedSignIn: false
     };
 
-  componentDidMount() {
-    console.log({hey:
-      AsyncStorage.getItem('token').then((value) => {
-        console.log({value});
-       })
-
-    }
-    )
-    
-    isSignedIn()
-    .then(res => {
-      console.log({res})
-      if (res) {
-        console.log('we made it')
-        fetch('http://localhost:8000/api/current_user/', {
-          headers: {
-            Authorization: `JWT ${AsyncStorage.getItem('token')}`
-          }
-        })
-        .then(res => res.json())
-        .then(json => {
-          console.log('okay')
-          this.setState({ 
-            username: json.username, 
-            signedIn: true, 
-            checkedSignIn: true  });
-        })
-      } else {
+    componentDidMount() {
+      isSignedIn()
+      .then(res => {
         this.setState({ 
-          signedIn: false, 
-          })
-      }
-    })
-    .catch(err => console.log('error'));
-
-    // if (AsyncStorage.getItem('token')) {
-    // }
-    // else {
-    //   this.setState({ 
-    //     username: '', 
-    //     signedIn: false, 
-    //     checkedSignIn: false  });
-    // }
-  }
-
+          username: res.username, 
+          signedIn: res.success, 
+          checkedSignIn: res.success });
+        }
+      )
+      .catch(err => alert("An error occurred"));
+    }
+    
+  
   render() {
     const { checkedSignIn, signedIn } = this.state;
     console.log('woooooooooooooo')

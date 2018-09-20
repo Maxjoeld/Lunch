@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { AsyncStorage, StyleSheet, Text, View, } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
@@ -11,21 +12,13 @@ class LoginForm extends React.Component {
 
   login = (e, data) => {
     e.preventDefault();
-    fetch('http://localhost:8000/token-auth/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(json => {
-      console.log(json.token);
-      AsyncStorage.setItem('token', json.token);
+    const body = data;
+    axios.post('http://localhost:8000/token-auth/', body)
+    .then(res => {
+      AsyncStorage.setItem('token', res.data.token);
       this.props.navigation.navigate('tabNav');
-
     })
-    .catch((err) => console.log('error'))
+    .catch((err) => console.log(err))
   };
 
   render() {

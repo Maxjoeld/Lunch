@@ -5,7 +5,18 @@ export const isSignedIn = () => {
     AsyncStorage.getItem('token')
       .then(res => {
         if (res !== null) {
-          resolve(true);
+          fetch('http://localhost:8000/api/current_user/', {
+            headers: {
+              Authorization: `JWT ${AsyncStorage.getItem('token')}`
+            }
+          })
+          .then(res => res.json())
+          .then(json => {
+            console.log({json})
+            resolve({ success: true,  username: json.username, 
+              signedIn: true, });
+          })
+          .catch((err) => console.log(err));
         } else {
           resolve(false);
         }

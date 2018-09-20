@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, FlatList, ActivityIndicator, View, Image } from 'react-native';
 import { List, ListItem, SearchBar, Avatar } from "react-native-elements";
 import axios from 'axios';
+import { isSignedIn } from "./auth";
 
 class HomeScreen extends Component {
   state = { 
@@ -13,6 +14,13 @@ class HomeScreen extends Component {
    }
 
   componentDidMount() {
+    isSignedIn()
+    .then(res => {
+      if (!res.success) {
+        return this.props.navigation.navigate('Signin');
+      } 
+    })
+    .catch(err => alert("An error occurred"));
     this.fetchDataFromApi();
   }
 
