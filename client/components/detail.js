@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { List, ListItem, SearchBar, Avatar } from "react-native-elements";
+import { FontAwesome } from "react-native-vector-icons";
 
 
 export default class DetailScreen extends React.Component {
@@ -20,6 +21,11 @@ export default class DetailScreen extends React.Component {
           />
         <Text style={styles.dMenuText}>{params.menu}</Text>
           <Text style={styles.dMenuText}>{params.address}</Text>
+          <Text style={styles.dMenuText}>
+            <FontAwesome name="star" size={15} style={{ marginRight: 10, color: 'gold'}}/>
+            {params.rating}
+          </Text>
+          <Text style={styles.dMenuText}>{params.review_count} Reviews</Text>
       </View>
     );
   }

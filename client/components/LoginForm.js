@@ -25,16 +25,14 @@ class LoginForm extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Log In</Text>
-        <FormLabel htmlFor="username">Username</FormLabel>
+        <FormLabel>Username</FormLabel>
         <FormInput
-          type="text"
           name="username"
           value={this.state.username}
           onChangeText={(username) => this.setState({username})}
         />
         <FormLabel>Password</FormLabel>
-        <FormInput
-          type="password"
+        <FormInput secureTextEntry={true}
           name="password"
           value={this.state.password}
           onChangeText={(password) => this.setState({password})}
@@ -75,10 +73,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-
     width: '100%',
     height: 30,
     color: 'white',
     backgroundColor: 'black',
-  }
+  },
 });

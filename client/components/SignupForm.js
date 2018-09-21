@@ -20,13 +20,8 @@ class SignupForm extends React.Component {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json);
-        AsyncStorage.setItem('token', json.token);
-        this.setState({
-          logged_in: true,
-          displayed_form: '',
-          username: json.username
-        });
+        AsyncStorage.setItem('token', res.data.token);
+        this.props.navigation.navigate('tabNav');
       });
   };
 

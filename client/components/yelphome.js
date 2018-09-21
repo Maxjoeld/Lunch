@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FontAwesome } from "react-native-vector-icons";
 import { StyleSheet, Text, FlatList, ActivityIndicator, View, Image } from 'react-native';
 import { List, ListItem, SearchBar, Avatar } from "react-native-elements";
 import token from './token';
@@ -88,23 +89,30 @@ class HomeScreen extends Component {
           renderItem={({ item }) => (
             <ListItem 
               onPress={() => this.props.navigation.navigate('Detail',
-              {name: `${item.alias}`, menu: `${item.url}`,
+              {name: `${item.alias}`, menu: `${item.display_phone}`,
               img: item.image_url,
-              address: `${item.display_address}`})}
+              address: `${item.location.display_address}`,
+              review_count: item.review_count,
+              rating: item.rating})}
               avatar={<Avatar
-                      source={{uri: item.image_url}}
-                      onPress={() => console.log("Works!")}
+                      source={{uri: item.image_url ? item.image_url: 'noimg'}}
                       containerStyle={{marginBottom: 2}}
                       avatarStyle={{resizeMode: "cover"}}
                       width={140}
                       height={130}
                 />}
-              title={`${item.name}`}
+              title={<Text style={styles.titleText}>{item.name}</Text>}
               titleStyle={{ fontSize: 16}}
-              titleContainerStyle = {{ marginLeft: 50 }}
+              // titleContainerStyle = {{ marginLeft: 50 }}
               subtitle={<View style={styles.subtitleView}>
-                          <Text style={styles.menuText}>{item.url}</Text>
-                          <Text style={styles.locText}>{item.display_address}</Text>
+                          <Text style={styles.menuText}>{item.display_phone}</Text>
+                          <Text style={styles.locText}>{item.location.display_address}</Text>
+                          <View style={{ }}>
+                            <Text style={styles.locText}>{item.review_count} Reviews</Text>
+                            <Text style={styles.locText}>
+                              <FontAwesome name="star" size={15} style={{ marginRight: 10, color: 'gold'}}/>
+                              {item.rating}</Text>
+                          </View>
                         </View>}
               containerStyle={{ borderBottomWidth: 0, marginBottom: 20 }}
             />
@@ -135,7 +143,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingLeft: 10,
     paddingTop: 5,
-    marginLeft: 50
   },
   menuText: {
     paddingLeft: 10,
@@ -148,7 +155,9 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   titleText: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginLeft: 10,
+    fontSize: 20,
   },
   restaurantImage: {
     width: 600,
