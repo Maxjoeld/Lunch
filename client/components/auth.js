@@ -12,7 +12,6 @@ export const isSignedIn = () => {
           })
           .then(res => res.json())
           .then(json => {
-            console.log({json})
             resolve({ success: true,  username: json.username, 
               signedIn: true, });
           })

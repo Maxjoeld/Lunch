@@ -7,7 +7,7 @@ import { isSignedIn } from "./auth";
 
 class HomeScreen extends Component {
   state = { 
-    loading: false,
+    loading: true,
     data: [],
     error: null,
     refreshing: false,
@@ -28,16 +28,16 @@ class HomeScreen extends Component {
   fetchDataFromApi = () => {
 
 
-    this.setState({ loading: true })
+    // this.setState({ loading: true })
     console.log({ thisistoken: token.token});
     axios.get('https://api.yelp.com/v3/businesses/search?term=delis&location=11385',{
       headers: {
         'Authorization': `bearer ${token.token}`
       }})
       .then(res => {
-        console.log({thisistheresponse: res.data})
+        // console.log({thisistheresponse: res.data})
         this.setState({
-          data: res.data,
+          data: res.data.businesses,
           error: null,
           loading: false,
           refreshing: false
@@ -78,20 +78,21 @@ class HomeScreen extends Component {
     return <SearchBar placeholder="Type Here..." lightTheme round />;
   };
 
-
   render() {
+    const data = this.state.data;
     return (
       <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-        <FlatList
-          data={this.state.data}
+        {this.state.data.length > 1 ?
+          <FlatList
+          data={data}
           renderItem={({ item }) => (
-            <ListItem
+            <ListItem 
               onPress={() => this.props.navigation.navigate('Detail',
-              {name: `${item.name}`, menu: `${item.menu}`,
-              img: `${this.state.base_url}${item.photo}`,
-              address: `${item.address}`})}
+              {name: `${item.alias}`, menu: `${item.url}`,
+              img: item.image_url,
+              address: `${item.display_address}`})}
               avatar={<Avatar
-                      source={{uri: `${this.state.base_url}${item.photo}`}}
+                      source={{uri: item.image_url}}
                       onPress={() => console.log("Works!")}
                       containerStyle={{marginBottom: 2}}
                       avatarStyle={{resizeMode: "cover"}}
@@ -102,8 +103,8 @@ class HomeScreen extends Component {
               titleStyle={{ fontSize: 16}}
               titleContainerStyle = {{ marginLeft: 50 }}
               subtitle={<View style={styles.subtitleView}>
-                          <Text style={styles.menuText}>{item.menu}</Text>
-                          <Text style={styles.locText}>{item.address}</Text>
+                          <Text style={styles.menuText}>{item.url}</Text>
+                          <Text style={styles.locText}>{item.display_address}</Text>
                         </View>}
               containerStyle={{ borderBottomWidth: 0, marginBottom: 20 }}
             />
@@ -113,7 +114,9 @@ class HomeScreen extends Component {
         ListHeaderComponent={this.renderHeader}
         onRefresh={this.handleRefresh}
         refreshing={this.state.refreshing}
-        />
+        loading={this.loading}
+        /> 
+        : <Text>Loading</Text>}
       </List>
     );
   }
