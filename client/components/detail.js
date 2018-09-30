@@ -17,7 +17,7 @@ export default class DetailScreen extends React.Component {
                 containerStyle={{marginBottom: 12, marginTop: 20}}
                 avatarStyle={{resizeMode: "cover"}}
                 width={300}
-                height={200}
+                height={300}
           />
         <Text style={styles.dMenuText}>{params.menu}</Text>
           <Text style={styles.dMenuText}>{params.address}</Text>
